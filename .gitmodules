@@ -1,6 +1,3 @@
-[submodule "trio-signo-server"]
-	path = trio-signo-server
-	url = https://github.com/EIP-TEK89/trio-signo-server.git
 [submodule "refacto-front"]
 	path = refacto-front
 	url = https://github.com/EIP-TEK89/refacto-front.git
