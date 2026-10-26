@@ -1,0 +1,17 @@
+mediapipe
+Flask
+requests
+python-dotenv
+waitress
+torch
+pillow
+flask-cors
+cbor2
+optuna
+pygame
+onnx
+onnxruntime
+numpy
+
+# Video recorder
+moviepy

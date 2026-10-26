@@ -1,0 +1,80 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: supersecurepassword123
+      POSTGRES_DB: triosigno
+    networks:
+      - mynetwork
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d triosigno"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      
+  nginx:
+    image: nginx:alpine
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/nginx/ssl
+      - ./nginx/www:/var/www/html
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+    depends_on:
+      - front-service
+      - server
+    networks:
+      - mynetwork
+      
+  certbot:
+    image: certbot/certbot
+    # restart: unless-stopped
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - ./nginx/www:/var/www/html
+    depends_on:
+      - nginx
+
+  server:
+    build: trio-signo-server/.
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql://postgres:supersecurepassword123@db:5432/triosigno?schema=public
+    networks:
+      - mynetwork
+    entrypoint: ["/bin/sh", "-c", 'echo $DATABASE_URL && npx prisma migrate deploy && npm run start:prod']
+
+  front-service:
+    build: refacto-front/.
+    restart: always
+    expose:
+      - "5173"
+    depends_on:
+      - server
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+
+volumes:
+  pgdata:
+  pgadmin_data:
+  certbot-etc:
+  certbot-var:

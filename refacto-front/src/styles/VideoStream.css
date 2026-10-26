@@ -1,0 +1,168 @@
+.video-stream-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.canvas-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+}
+
+.video-canvas {
+  display: block;
+  max-width: 100%;
+  border-radius: 0.5rem;
+  border: 2px solid #ccc;
+  object-fit: contain;
+  background-color: #000;
+}
+
+/* New styles for fixed aspect ratio container */
+.canvas-aspect-ratio-container {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  background-color: #000;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.canvas-aspect-ratio-container .video-canvas {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 767px) {
+  .video-stream-container {
+    padding: 0 15px;
+    width: 100%;
+  }
+
+  .canvas-container {
+    margin-bottom: 1rem;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .canvas-aspect-ratio-container {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .canvas-aspect-ratio-container .video-canvas {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+  }
+}
+
+/* For portrait orientation on mobile */
+@media (max-width: 767px) and (orientation: portrait) {
+  .canvas-aspect-ratio-container {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}
+
+/* For landscape orientation on mobile */
+@media (max-width: 767px) and (orientation: landscape) {
+  .canvas-container {
+    max-height: 60vh;
+  }
+
+  .canvas-aspect-ratio-container {
+    max-width: 400px;
+    max-height: 60vh;
+  }
+
+  .canvas-aspect-ratio-container .video-canvas {
+    max-height: 60vh;
+    width: auto;
+    height: auto;
+  }
+}
+
+.loading-overlay,
+.camera-error-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  z-index: 10;
+}
+
+.loading-overlay {
+  background-color: #f3f4f6;
+}
+
+.loading-overlay p {
+  color: #4b5563;
+  text-align: center;
+  padding: 1rem;
+}
+
+.camera-error-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.camera-error-message {
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+
+.retry-button {
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 500;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.retry-button:hover {
+  background-color: #2563eb;
+}
+
+.sign-output {
+  margin-top: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.text-info {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.hidden {
+  display: none;
+}

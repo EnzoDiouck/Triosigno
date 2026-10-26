@@ -1,0 +1,81 @@
+{
+  "expo": {
+    "name": "TrioSigno",
+    "slug": "trio-signo-mobile",
+    "icon": "./assets/icon.png",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "runtimeVersion": {
+        "policy": "appVersion"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#1a1a1a"
+      },
+      "edgeToEdgeEnabled": true,
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.anonymous.triosignomobile",
+      "runtimeVersion": "1.0.0"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "imageWidth": 200,
+          "image": "./assets/splash.png",
+          "resizeMode": "contain",
+          "dark": {
+            "image": "./assets/splash.png",
+            "imageWidth": 200,
+            "backgroundColor": "#1a1a1a"
+          },
+          "backgroundColor": "#1a1a1a"
+        }
+      ],
+      "expo-secure-store",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "fecad8a1-4e91-494a-a1ed-e97c29c46489"
+      }
+    },
+    "owner": "trio_signo24",
+    "updates": {
+      "url": "https://u.expo.dev/fecad8a1-4e91-494a-a1ed-e97c29c46489"
+    },
+    "permissions": [
+      "CAMERA"
+    ]
+  }
+}

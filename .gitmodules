@@ -1,0 +1,12 @@
+[submodule "trio-signo-server"]
+	path = trio-signo-server
+	url = https://github.com/EIP-TEK89/trio-signo-server.git
+[submodule "refacto-front"]
+	path = refacto-front
+	url = https://github.com/EIP-TEK89/refacto-front.git
+[submodule "trio-signo-ai"]
+	path = trio-signo-ai
+	url = https://github.com/EIP-TEK89/trio-signo-ai.git
+[submodule "trio-signo-mobile"]
+	path = trio-signo-mobile
+	url = https://github.com/EIP-TEK89/trio-signo-mobile.git

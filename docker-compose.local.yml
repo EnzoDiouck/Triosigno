@@ -1,0 +1,51 @@
+# TrioSigno en local : base de données + API NestJS + site web React
+# Lancement : docker compose -f docker-compose.local.yml up --build
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: triosigno
+      POSTGRES_PASSWORD: triosigno
+      POSTGRES_DB: triosigno
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U triosigno -d triosigno"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  server:
+    build:
+      context: ./trio-signo-server
+      dockerfile: Dockerfile.local
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://triosigno:triosigno@db:5432/triosigno?schema=public
+      JWT_SECRET: demo-local-secret-a-changer
+      ADMIN_EMAIL: demo@triosigno.local
+      ADMIN_USERNAME: demo
+      ADMIN_PASSWORD: Demo1234!
+      # Connexion Google désactivée en local, mais le serveur exige ces variables pour démarrer
+      GOOGLE_CLIENT_ID: local-disabled
+      GOOGLE_CLIENT_SECRET: local-disabled
+      GOOGLE_REDIRECT_URI: http://localhost:3000/api/auth/google/callback
+    ports:
+      - "3000:3000"
+    entrypoint: ["/bin/sh", "-c", "npx prisma migrate deploy && node dist/src/main.js"]
+
+  front:
+    build:
+      context: ./refacto-front
+      dockerfile: Dockerfile.local
+    depends_on:
+      - server
+    ports:
+      - "5173:5173"
+
+volumes:
+  pgdata:
