@@ -1,0 +1,19 @@
+FROM node:23.8-alpine3.20
+WORKDIR /usr/src/app
+
+# ── install Postgres client (includes pg_isready) ─────────────────────────────
+RUN apk add --no-cache postgresql-client
+
+# ── copy + install deps + generate client ─────────────────────────────────────
+COPY package*.json ./
+COPY prisma ./prisma/
+RUN npm install
+RUN npx prisma generate
+
+# ── copy app + entrypoint ────────────────────────────────────────────────────
+COPY . .
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+EXPOSE 3000
+ENTRYPOINT ["entrypoint.sh"]
